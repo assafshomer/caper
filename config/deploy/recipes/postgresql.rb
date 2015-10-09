@@ -1,7 +1,8 @@
 set_if_empty(:postgresql_host, "localhost")
-set_if_empty(:postgresql_user, fetch(:application)) 
-# set_if_empty(:postgresql_password) { Capistrano::CLI.password_prompt "PostgreSQL Password: " }
-# set_if_empty(:postgresql_database) { "#{application}_production" }
+set_if_empty(:postgresql_user, fetch(:application))
+ask(:pg_password, nil, echo: false) 
+set_if_empty(:postgresql_password, fetch(:pg_password))
+set_if_empty(:postgresql_database, "#{fetch(:application)}_production")
 
 namespace :postgresql	do
 	desc "Install the latest stable release of PostgreSQL."
