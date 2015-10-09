@@ -36,4 +36,14 @@ First capify
 	cap install .
 ```
 
+## Enable passwordless sudo on the server
+
+```Batchfile
+	sudo visudo	
+```
+Add at the end of the file
+```Batchfile
+	deployer ALL=(ALL) NOPASSWD:ALL
+```
+
 
