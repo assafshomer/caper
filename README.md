@@ -10,21 +10,30 @@ Deploying a rails app with capistrano
 comment in gems in Default Gemfile
 * rubyracer 
 * capistrano-rails
+
 ```Batchfile
 	bundle install
 	rails g scaffold article name content:text
 	rake db:migrate
 ```
 
-Ignore db.yml
+## Setup Git
+
+First ignore db.yml
 
 ```Batchfile
 	echo "/config/database.yml" >> .gitignore
+	cp config/database.yml config/database.example.yml
 ```
 
-## capify
-	
+now create a repo and push
+
+## Capistrano
+
+First capify
+
 ```Batchfile
 	cap install .
 ```
+
 
