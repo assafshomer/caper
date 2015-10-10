@@ -1,9 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
-
-require_relative "./deploy/recipes/base"
-require_relative "./deploy/recipes/postgresql"
 set :application, 'caper'
+
 # set :repo_url, 'git@example.com:me/my_repo.git'
 
 # Default branch is :master
@@ -35,6 +33,9 @@ set :pty, true
 
 # Default value for keep_releases is 5
 # set :keep_releases, 5
+
+require_relative "./deploy/recipes/base"
+require_relative "./deploy/recipes/postgresql"
 
 # namespace :deploy do
 

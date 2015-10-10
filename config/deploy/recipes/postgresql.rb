@@ -1,7 +1,6 @@
 set_if_empty(:postgresql_host, "localhost")
 set_if_empty(:postgresql_user, fetch(:application))
-ask(:pg_password, nil, echo: false) 
-set_if_empty(:postgresql_password, fetch(:pg_password))
+set_if_empty(:postgresql_password, ask(:pg_password, nil, echo: false))
 set_if_empty(:postgresql_database, "#{fetch(:application)}_production")
 
 namespace :postgresql	do
@@ -14,4 +13,14 @@ namespace :postgresql	do
 		end
 	end
 	after "deploy:install", "postgresql:install"
+
+	desc "Create a database for this application."
+	task :create_database do
+		on roles(:db) do
+			execute "echo 'user: #{fetch(:postgresql_user)}'"
+			execute :sudo, %Q{-u postgres psql -c "create user #{fetch(:postgresql_user)} with password '#{fetch(:postgresql_password)}';"}
+			execute :sudo, %Q{-u postgres psql -c "create database #{fetch(:postgresql_database)} owner #{fetch(:postgresql_user)};"}
+		end
+	end
+	after "postgresql:install", "postgresql:create_database"
 end
