@@ -6,11 +6,10 @@ namespace :devops do
 			execute :sudo, "apt-get -y install curl git-core python-software-properties software-properties-common"
 		end
 	end
-	
+
 	desc "Copy files"
 	task :copy do
-		on roles(:all) do |host|
-			set :rails_root, File.expand_path("../../../../", __FILE__)+'/'
+		on roles(:all) do
 			%w(.env config/database.yml).each do |f|
 				upload! fetch(:rails_root).to_s+ f , shared_path + f
 			end

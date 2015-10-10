@@ -5,6 +5,7 @@ set :deploy_user, 'deployer'
 set :repo_url, 'git@github.com:assafshomer/caper.git'
 
 set :rvm_ruby_version, '2.2.0'
+set :rails_root, File.expand_path("../../", __FILE__)+'/'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp

@@ -1,3 +1,4 @@
+set_if_empty(:redis_port, "6379")
 
 namespace :redis	do
 	desc "Install the latest stable release of PostgreSQL."
@@ -8,6 +9,11 @@ namespace :redis	do
 			execute "cd redis-stable && make"
 			execute :sudo, "cp ~/redis-stable/src/redis-server /usr/local/bin/"
 			execute :sudo, "cp ~/redis-stable/src/redis-cli /usr/local/bin/"
+			execute :sudo, "mkdir -p /etc/redis"
+			execute :sudo, "mkdir -p /var/redis"
+			execute :sudo, "mkdir -p /var/redis/#{fetch(:redis_port)}"
+			execute :sudo,"cp ~/redis-stable/utils/redis_init_script /etc/init.d/redis_#{fetch(:redis_port)}"
+			execute :sudo, "cp ~/redis-stable/redis.conf /etc/redis/#{fetch(:redis_port)}.conf"
 		end
 	end
 end

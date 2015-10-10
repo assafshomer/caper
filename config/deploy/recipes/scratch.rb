@@ -13,9 +13,13 @@ namespace :test	do
 		puts "ask: [#{fetch(:foo,'default')}]"
 	end
 
-	task :root do
-		set :rails_env, fetch(:stage)
-		puts "rails_env: [#{fetch(:rails_env,'default')}]"
+	desc "Copy files"
+	task :copy do
+		on roles(:all) do
+			%w(foo.erb).each do |f|
+				upload! fetch(:rails_root).to_s+'config/deploy/aux/'+f , '/home/oren/'+f
+			end
+		end
 	end
 
 end
