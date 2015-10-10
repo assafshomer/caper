@@ -33,7 +33,7 @@ gem 'unicorn'
 group :development do
 	gem 'capistrano-rails'
 	gem 'capistrano-rvm'
-	gem 'capistrano-unicorn-nginx'
+	# gem 'capistrano-unicorn-nginx'
 end
 
 
