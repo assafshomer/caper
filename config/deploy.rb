@@ -39,21 +39,13 @@ set :linked_files, %w{.env config/database.yml}
 require_relative "./deploy/recipes/scratch"
 require_relative "./deploy/recipes/base"
 require_relative "./deploy/recipes/devops"
-# require_relative "./deploy/recipes/rvm"
 require_relative "./deploy/recipes/postgresql"
 
-before :deploy, "devops:copy"
-# after :deploy, "deploy:install"
-# after "devops:copy", "postgresql:install"
-# after "postgresql:install", "postgresql:check_db"
-# after "postgresql:check_db", "postgresql:create_database"
-# after "postgresql:create_database", "rvm:check"
-# after "rvm:check", "rvm:install"
-
-
-
-
-
+before :deploy, "devops:install"
+after "devops:install", "postgresql:install"
+after "postgresql:install", "postgresql:check_db"
+after "postgresql:check_db", "postgresql:create_database"
+after "postgresql:create_database", "devops:copy"
 
 # namespace :deploy do
 

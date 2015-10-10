@@ -12,7 +12,6 @@ namespace :postgresql	do
 			execute :sudo, "apt-get -y install postgresql libpq-dev"
 		end
 	end
-	after "deploy:install", "postgresql:install"
 
 	desc "check if db alread exists"
 	task :check_db do
@@ -34,5 +33,6 @@ namespace :postgresql	do
 			end
 		end
 	end
+	
 
 end
