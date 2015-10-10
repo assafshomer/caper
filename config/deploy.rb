@@ -46,7 +46,8 @@ before :deploy, "devops:install"
 after "devops:install", "postgresql:install"
 after "postgresql:install", "postgresql:check_db"
 after "postgresql:check_db", "postgresql:create_database"
-after "postgresql:create_database", "devops:copy"
+after "postgresql:create_database", "redis:install"
+after "redis:install", "devops:copy"
 
 # namespace :deploy do
 
