@@ -40,6 +40,7 @@ require_relative "./deploy/recipes/scratch"
 require_relative "./deploy/recipes/base"
 require_relative "./deploy/recipes/devops"
 require_relative "./deploy/recipes/postgresql"
+require_relative "./deploy/recipes/redis"
 
 before :deploy, "devops:install"
 after "devops:install", "postgresql:install"
