@@ -13,7 +13,8 @@ namespace :redis	do
 			execute :sudo, "mkdir -p /var/redis"
 			execute :sudo, "mkdir -p /var/redis/#{fetch(:redis_port)}"
 			execute :sudo,"cp ~/redis-stable/utils/redis_init_script /etc/init.d/redis_#{fetch(:redis_port)}"
-			execute :sudo, "cp ~/redis-stable/redis.conf /etc/redis/#{fetch(:redis_port)}.conf"
+			template "redis.conf.erb", "/tmp/#{fetch(:redis_port)}.conf"
+			execute :sudo, "cp /tmp/#{fetch(:redis_port)}.conf /etc/redis/#{fetch(:redis_port)}.conf"
 		end
 	end
 end

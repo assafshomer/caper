@@ -1,6 +1,7 @@
 def template(from, to)
-  erb = File.read(File.expand_path("../templates/#{from}", __FILE__))
-  put ERB.new(erb).result(binding), to
+  template_path = File.expand_path("../templates/#{from}", __FILE__)
+  template = ERB.new(File.new(template_path).read).result(binding)
+  upload! StringIO.new(template), to
 end
 
 def set_default(name, *args, &block)
@@ -16,8 +17,4 @@ namespace :test	do
 			execute :sudo, "cp ~/#{tmp}.txt /#{tmp}"
 		end
 	end
-end
-
-namespace :deploy	do
-
 end

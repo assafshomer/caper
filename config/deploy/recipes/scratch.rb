@@ -17,8 +17,14 @@ namespace :test	do
 	task :copy do
 		on roles(:all) do
 			%w(foo.erb).each do |f|
-				upload! fetch(:rails_root).to_s+'config/deploy/aux/'+f , '/home/oren/'+f
+				upload! fetch(:rails_root).to_s+'config/deploy/aux/'+f, shared_path + f
 			end
+		end
+	end
+
+	task :tmp do		
+		on roles(:all) do
+			template "foo.erb", "#{shared_path}/buz.txt"
 		end
 	end
 
