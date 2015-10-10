@@ -15,6 +15,10 @@ namespace :redis	do
 			execute :sudo,"cp ~/redis-stable/utils/redis_init_script /etc/init.d/redis_#{fetch(:redis_port)}"
 			template "redis.conf.erb", "/tmp/#{fetch(:redis_port)}.conf"
 			execute :sudo, "cp /tmp/#{fetch(:redis_port)}.conf /etc/redis/#{fetch(:redis_port)}.conf"
+			execute :sudo, "update-rc.d redis_#{fetch(:redis_port)} defaults"
+			execute :sudo, "chmod -R a+w /var/redis/"
+			execute :sudo, "chmod -R a+w /var/run/"
+			execute :sudo, "chmod -R a+w /var/log/"
 		end
 	end
 end
