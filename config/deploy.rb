@@ -1,14 +1,14 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 set :application, 'caper'
-
+set :deploy_user, 'deployer'
 set :repo_url, 'git@github.com:assafshomer/caper.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
+set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:application)}"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -36,6 +36,7 @@ set :linked_files, %w{.env config/app_config.yml}
 
 require_relative "./deploy/recipes/scratch"
 require_relative "./deploy/recipes/base"
+require_relative "./deploy/recipes/devops"
 require_relative "./deploy/recipes/postgresql"
 
 # namespace :deploy do
