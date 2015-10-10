@@ -14,13 +14,27 @@ namespace :postgresql	do
 	end
 	after "deploy:install", "postgresql:install"
 
+	desc "check if db alread exists"
+	task :check_db do
+		on roles(:db) do
+			execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
+			output = capture("cat ~/checkdb.txt | grep #{fetch(:postgresql_database)}")
+			output.empty? ? set(:db_exists, false) : set(:db_exists, true)
+		end
+	end
+
 	desc "Create a database for this application."
 	task :create_database do
 		on roles(:db) do
-			execute "echo 'user: #{fetch(:postgresql_user)}'"
-			execute :sudo, %Q{-u postgres psql -c "create user #{fetch(:postgresql_user)} with password '#{fetch(:postgresql_password)}';"}
-			execute :sudo, %Q{-u postgres psql -c "create database #{fetch(:postgresql_database)} owner #{fetch(:postgresql_user)};"}
+			if fetch(:db_exists)
+				puts "db #{fetch(:postgresql_database)} already exists, skipping.."
+			else
+				execute :sudo, %Q{-u postgres psql -c "create user #{fetch(:postgresql_user)} with password '#{fetch(:postgresql_password)}';"}
+				execute :sudo, %Q{-u postgres psql -c "create database #{fetch(:postgresql_database)} owner #{fetch(:postgresql_user)};"}				
+			end
 		end
 	end
-	after "postgresql:install", "postgresql:create_database"
+	after "postgresql:install", "postgresql:check_db"
+	after "postgresql:check_db", "postgresql:create_database"
+
 end
