@@ -16,5 +16,6 @@ namespace :test	do
 	task :root do
 		set :rails_env, fetch(:stage)
 		puts "rails_env: [#{fetch(:rails_env,'default')}]"
-	end	
+	end
+
 end

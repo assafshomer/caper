@@ -4,6 +4,8 @@ set :application, 'caper'
 set :deploy_user, 'deployer'
 set :repo_url, 'git@github.com:assafshomer/caper.git'
 
+set :rvm_ruby_version, '2.2.0'
+
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
@@ -23,7 +25,7 @@ set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:application)}"
 set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{.env config/app_config.yml}
+set :linked_files, %w{.env config/database.yml}
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
@@ -37,7 +39,21 @@ set :linked_files, %w{.env config/app_config.yml}
 require_relative "./deploy/recipes/scratch"
 require_relative "./deploy/recipes/base"
 require_relative "./deploy/recipes/devops"
+# require_relative "./deploy/recipes/rvm"
 require_relative "./deploy/recipes/postgresql"
+
+after :deploy, "deploy:install"
+after "deploy:install", "devops:copy"
+after "devops:copy", "postgresql:install"
+after "postgresql:install", "postgresql:check_db"
+after "postgresql:check_db", "postgresql:create_database"
+# after "postgresql:create_database", "rvm:check"
+# after "rvm:check", "rvm:install"
+
+
+
+
+
 
 # namespace :deploy do
 

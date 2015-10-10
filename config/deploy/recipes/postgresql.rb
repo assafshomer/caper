@@ -34,7 +34,5 @@ namespace :postgresql	do
 			end
 		end
 	end
-	after "postgresql:install", "postgresql:check_db"
-	after "postgresql:check_db", "postgresql:create_database"
 
 end
