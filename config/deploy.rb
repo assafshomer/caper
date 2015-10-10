@@ -41,6 +41,7 @@ require_relative "./deploy/recipes/base"
 require_relative "./deploy/recipes/devops"
 require_relative "./deploy/recipes/postgresql"
 require_relative "./deploy/recipes/redis"
+require_relative "./deploy/recipes/unicorn"
 
 before :deploy, "devops:install"
 after "devops:install", "postgresql:install"
@@ -48,6 +49,7 @@ after "postgresql:install", "postgresql:check_db"
 after "postgresql:check_db", "postgresql:create_database"
 after "postgresql:create_database", "redis:install"
 after "redis:install", "devops:copy"
+# after :deploy, "unicorn:setup"
 
 # namespace :deploy do
 
