@@ -21,7 +21,7 @@ namespace :nginx do
       template "nginx_unicorn.erb", "/tmp/nginx_conf"
       execute :sudo, "mv /tmp/nginx_conf #{fetch(:nginx_config)}"
       execute :sudo, "rm -f /etc/nginx/sites-enabled/default"
-      restart      
+      invoke "nginx:restart"      
     end
   end
 

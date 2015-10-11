@@ -36,20 +36,37 @@ set :linked_files, %w{.env config/database.yml}
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-require_relative "./deploy/recipes/scratch"
-require_relative "./deploy/recipes/base"
-require_relative "./deploy/recipes/devops"
-require_relative "./deploy/recipes/postgresql"
-require_relative "./deploy/recipes/redis"
-require_relative "./deploy/recipes/unicorn"
+%w[scratch base devops nginx unicorn postgresql redis].each do |recipe|
+	require_relative "./deploy/recipes/#{recipe}"
+end
+# require_relative "./deploy/recipes/scratch"
+# require_relative "./deploy/recipes/base"
+# require_relative "./deploy/recipes/devops"
+# require_relative "./deploy/recipes/postgresql"
+# require_relative "./deploy/recipes/redis"
+# require_relative "./deploy/recipes/unicorn"
 
 before :deploy, "devops:install"
-after "devops:install", "postgresql:install"
-after "postgresql:install", "postgresql:check_db"
-after "postgresql:check_db", "postgresql:create_database"
-after "postgresql:create_database", "redis:install"
-after "redis:install", "devops:copy"
-# after :deploy, "unicorn:setup"
+before :deploy, "nginx:install"
+before :deploy, "postgresql:install"
+before :deploy, "redis:install"
+before :deploy, "devops:setup"
+before :deploy, "nginx:setup"
+before :deploy, "unicorn:setup"
+before :deploy, "postgresql:setup"
+# before :deploy, "redis:setup"
+after :deploy, "unicorn:restart"
+
+
+
+# after "devops:install", "postgresql:install"
+# after "postgresql:install", "postgresql:check_db"
+# after "postgresql:check_db", "postgresql:create_database"
+# after "postgresql:create_database", "redis:install"
+# after "redis:install", "nginx:install" 
+# after "nginx:install", "devops:copy"
+# after "devops:copy", "nginx:setup"
+# after "nginx:setup", "unicorn:setup"
 
 # namespace :deploy do
 

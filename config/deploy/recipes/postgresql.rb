@@ -33,6 +33,13 @@ namespace :postgresql	do
 			end
 		end
 	end
-	
+
+	desc "check db and create unless already exist"
+	task :setup do
+		on roles(:db) do
+			invoke "postgresql:check_db"
+			invoke "postgresql:create_database"
+		end
+	end
 
 end

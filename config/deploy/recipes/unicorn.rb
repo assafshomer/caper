@@ -10,7 +10,7 @@ namespace :unicorn do
     on roles(:app) do
       execute :sudo, "mkdir -p #{fetch(:shared_path)}/config"
       template "unicorn.rb.erb", "/tmp/unicorn.rb"
-      execute :sudo, "cp /tmp/unicorn.rb", fetch(:unicorn_config)
+      execute :sudo, "mv /tmp/unicorn.rb #{fetch(:unicorn_config)}"
       template "unicorn_init.erb", "/tmp/unicorn_init"
       execute :sudo, "chmod +x /tmp/unicorn_init"
       execute :sudo, "mv /tmp/unicorn_init /etc/init.d/unicorn_#{fetch(:application)}"
