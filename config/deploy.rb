@@ -51,10 +51,9 @@ before :deploy, "nginx:install"
 before :deploy, "postgresql:install"
 before :deploy, "redis:install"
 before :deploy, "devops:setup"
-before :deploy, "nginx:setup"
-before :deploy, "unicorn:setup"
 before :deploy, "postgresql:setup"
-# before :deploy, "redis:setup"
+after :deploy, "nginx:setup"
+after :deploy, "unicorn:setup"
 after :deploy, "unicorn:restart"
 
 
