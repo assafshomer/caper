@@ -1,7 +1,7 @@
 set_if_empty(:unicorn_user, fetch(:deploy_user))
-set_if_empty(:unicorn_pid, "#{fetch(:current_path)}/tmp/pids/unicorn.pid")
-set_if_empty(:unicorn_config, "#{fetch(:shared_path)}/config/unicorn.rb")
-set_if_empty(:unicorn_log, "#{fetch(:shared_path)}/log/unicorn.log")
+set_if_empty(:unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid")
+set_if_empty(:unicorn_config, "#{shared_path}/config/unicorn.rb")
+set_if_empty(:unicorn_log, "#{shared_path}/log/unicorn.log")
 set_if_empty(:unicorn_workers, 2)
 
 namespace :unicorn do
@@ -26,5 +26,4 @@ namespace :unicorn do
       end      
     end    
   end
-
 end

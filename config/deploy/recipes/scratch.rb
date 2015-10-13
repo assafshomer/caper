@@ -1,3 +1,5 @@
+set_if_empty(:ufo,'blarg')
+
 namespace :test	do
 	desc "test sudo on server"
 	tmp = "foo_#{rand(100)}"
@@ -25,6 +27,12 @@ namespace :test	do
 	task :tmp do		
 		on roles(:all) do
 			template "foo.erb", "#{shared_path}/buz.txt"
+		end
+	end
+
+	task :print do
+		on roles(:all) do
+			puts "Assaf: #{fetch(:ufo)}"
 		end
 	end
 
