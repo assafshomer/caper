@@ -17,8 +17,12 @@ namespace :postgresql	do
 	task :check_db do
 		on roles(:db) do
 			execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
-			output = capture("cat ~/checkdb.txt | grep #{fetch(:postgresql_database)}", raise_on_non_zero_exit: false)
-			output.empty? ? set(:db_exists, false) : set(:db_exists, true)
+			output = capture("cat ~/checkdb.txt")
+			if output =~ /#{fetch(:postgresql_database)}/
+				set(:db_exists, true)
+			else
+				set(:db_exists, false)
+			end
 		end
 	end
 

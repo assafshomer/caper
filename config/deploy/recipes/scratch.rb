@@ -36,4 +36,16 @@ namespace :test	do
 		end
 	end
 
+	task :pgfoo do
+		on roles(:all) do		
+			execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
+			output = capture("cat ~/checkdb.txt")
+			if output =~ /#{fetch(:postgresql_database)}/
+				set(:db_exists, true)
+			else
+				set(:db_exists, false)
+			end
+		end		
+	end
+
 end
