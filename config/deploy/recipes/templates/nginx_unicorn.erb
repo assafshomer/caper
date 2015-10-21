@@ -5,7 +5,7 @@ upstream unicorn {
 server {
   listen 80 default deferred;
   # server_name example.com;
-  root <%= current_path %>/public;
+  root <%= current_path %>;
 
   location ^~ /assets/ {
     gzip_static on;
