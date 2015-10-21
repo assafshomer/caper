@@ -22,8 +22,20 @@ namespace :unicorn do
     desc "#{command} unicorn"
     task command do
       on roles(:app) do
-        execute "service unicorn_#{fetch(:application)} #{command}"  
+        within current_path do
+          puts capture(:env)
+          execute "service unicorn_#{fetch(:application)} #{command}"
+        end
       end      
     end    
   end
+
+  # task :start do
+  #   on roles(:app) do
+  #     within current_path do
+  #       puts capture(:env)
+  #       execute "/etc/init.d/unicorn_#{fetch(:application)} start"
+  #     end
+  #   end
+  # end
 end
