@@ -5,8 +5,6 @@ namespace :rvm do
 	desc "install rvm"
 	task :install do
 		on roles(:all) do
-			execute :sudo, "apt-get -y purge ruby"	
-			
 			execute :sudo, "curl -sSL https://rvm.io/mpapis.asc | gpg --import -"
 			execute :sudo, "curl -L https://get.rvm.io | bash -s stable"			
 			execute "bash --login rvm requirements"
@@ -19,7 +17,6 @@ namespace :rvm do
 	desc "install bundler"
 	task :bundler do
 		on roles(:all) do
-			execute :sudo, "apt-get -y install bundler"
 			execute :sudo, "gem install bundler --no-ri --no-rdoc"
 		end
 	end
