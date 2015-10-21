@@ -21,7 +21,6 @@ namespace :devops do
 		on roles(:app) do
 			invoke "devops:install"
 			invoke "rvm:install"
-			invoke "rvm:bundler"
 			invoke "nginx:install"
 			invoke "postgresql:install"
 			invoke "redis:install"

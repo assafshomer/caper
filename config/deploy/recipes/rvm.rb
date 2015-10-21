@@ -17,7 +17,7 @@ namespace :rvm do
 	desc "install bundler"
 	task :bundler do
 		on roles(:all) do
-			execute "~/.rvm/scripts/gem install bundler"
+			execute "gem install bundler"
 		end
 	end
 
