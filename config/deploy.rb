@@ -5,6 +5,7 @@ set :deploy_user, 'deploy'
 set :repo_url, 'git@github.com:assafshomer/caper.git'
 
 set :rvm_ruby_version, '2.2.0'
+
 set :rails_root, File.expand_path("../../", __FILE__)+'/'
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -54,7 +55,7 @@ end
 # before :deploy, "postgresql:setup"
 
 # before :deploy, "devops:setup"
-before "deploy:check:linked_dirs", "devops:copy"
+before "deploy:check", "devops:copy"
 after :deploy, "nginx:setup"
 after :deploy, "unicorn:setup"
 after :deploy, "unicorn:restart"
