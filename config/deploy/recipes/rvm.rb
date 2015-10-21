@@ -14,6 +14,12 @@ namespace :rvm do
 		end
 	end
 
+	desc "install bundler"
+	task :bundler do
+		on roles(:all) do
+			execute "~/.rvm/scripts/gem install bundler"
+		end
+	end
 
 	# desc "check if rvm is installed"
 	# task :check_rvm do

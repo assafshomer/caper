@@ -19,7 +19,13 @@ namespace :devops do
 	desc "for now this is just copying env files"
 	task :setup do
 		on roles(:app) do
-			invoke "devops:copy"
+			invoke "devops:install"
+			invoke "rvm:install"
+			invoke "rvm:bundler"
+			invoke "nginx:install"
+			invoke "postgresql:install"
+			invoke "redis:install"
+			invoke "postgresql:setup"
 		end
 	end
 

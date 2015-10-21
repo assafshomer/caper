@@ -30,8 +30,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'unicorn'
 
 # Use Capistrano for deployment
-group :development do
+group :development do	
 	gem 'capistrano-rails'
+	gem 'capistrano-bundler'
 	gem 'capistrano-rvm'
 	gem 'capistrano-unicorn-nginx'
 end
