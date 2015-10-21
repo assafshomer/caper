@@ -1,7 +1,7 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 set :application, 'caper'
-set :deploy_user, 'deployer'
+set :deploy_user, 'deploy'
 set :repo_url, 'git@github.com:assafshomer/caper.git'
 
 set :rvm_ruby_version, '2.2.0'
@@ -36,7 +36,7 @@ set :linked_files, %w{.env config/database.yml}
 # Default value for keep_releases is 5
 # set :keep_releases, 5
 
-%w[scratch base devops nginx unicorn postgresql redis].each do |recipe|
+%w[scratch base devops nginx unicorn postgresql redis rvm].each do |recipe|
 	require_relative "./deploy/recipes/#{recipe}"
 end
 # require_relative "./deploy/recipes/scratch"
@@ -47,11 +47,12 @@ end
 # require_relative "./deploy/recipes/unicorn"
 
 before :deploy, "devops:install"
+before :deploy, "rvm:install"
 before :deploy, "nginx:install"
 before :deploy, "postgresql:install"
 before :deploy, "redis:install"
-before :deploy, "devops:setup"
 before :deploy, "postgresql:setup"
+after :deploy, "devops:setup"
 after :deploy, "nginx:setup"
 after :deploy, "unicorn:setup"
 after :deploy, "unicorn:restart"
