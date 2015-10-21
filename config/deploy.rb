@@ -53,8 +53,8 @@ end
 # before :deploy, "redis:install"
 # before :deploy, "postgresql:setup"
 
-before :deploy, "devops:setup"
-before "deploy:symlink:linked_dirs", "devops:copy"
+# before :deploy, "devops:setup"
+before "deploy:check:linked_dirs", "devops:copy"
 after :deploy, "nginx:setup"
 after :deploy, "unicorn:setup"
 after :deploy, "unicorn:restart"
