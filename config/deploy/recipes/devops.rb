@@ -3,7 +3,7 @@ namespace :devops do
 	task :install do
 		on roles(:web, :app, :db) do
 			execute :sudo, "apt-get -y update"
-			execute :sudo, "apt-get -y install curl git-core python-software-properties software-properties-common"
+			execute :sudo, "apt-get -y install curl git-core python-software-properties software-properties-common bundler"
 		end
 	end
 
