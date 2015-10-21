@@ -16,11 +16,9 @@ namespace :postgresql	do
 	desc "check if db alread exists"
 	task :check_db do
 		on roles(:db) do
-			unless fetch(:db_exists)
-				execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
-				output = capture("cat ~/checkdb.txt | grep #{fetch(:postgresql_database)}")
-				output.empty? ? set(:db_exists, false) : set(:db_exists, true)
-			end
+			execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
+			output = capture("cat ~/checkdb.txt | grep #{fetch(:postgresql_database)}", raise_on_non_zero_exit: false)
+			output.empty? ? set(:db_exists, false) : set(:db_exists, true)
 		end
 	end
 
