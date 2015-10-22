@@ -25,7 +25,7 @@ namespace :unicorn do
     task command do
       on roles(:app) do
         within current_path do
-          puts capture(:env)
+          # puts capture(:env)
           execute :sudo, "service unicorn_#{fetch(:application)} #{command}"
         end
       end      
