@@ -10,7 +10,7 @@ namespace :devops do
 	desc "Copy files"
 	task :copy do
 		on roles(:app) do
-			%w(.env config/database.yml).each do |f|
+			%w(.env config/database.yml config/secrets.yml).each do |f|
 				upload! fetch(:rails_root).to_s+ f , shared_path + f
 			end
 		end
