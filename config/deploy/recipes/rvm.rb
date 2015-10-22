@@ -10,7 +10,11 @@ namespace :rvm do
 			execute "bash --login rvm requirements"
 			execute "bash --login rvm install #{fetch(:ruby_version)}"
 			execute "~/.rvm/scripts/rvm use #{fetch(:ruby_version)} --default"
-			execute "~/.rvm/scripts/rvm rubygems current"					
+			execute "~/.rvm/scripts/rvm rubygems current"
+			execute :sudo, "echo rvm_trust_rvmrcs_flag=1 | sudo tee -a /etc/rvmrc"
+			execute "cd ~"
+			execute :sudo, %Q{sed -i '1i[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"' .bashrc}
+			execute :sudo, "sed -i '1iPATH=$PATH:$HOME/.rvm/bin' .bashrc"
 		end
 	end
 
