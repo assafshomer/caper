@@ -11,6 +11,7 @@ namespace :rvm do
 			execute "bash --login rvm install #{fetch(:ruby_version)}"
 			execute "~/.rvm/scripts/rvm use #{fetch(:ruby_version)} --default"
 			execute "~/.rvm/scripts/rvm rubygems current"
+			execute "~/.rvm/scripts/rvm rvmrc warning ignore all.rvmrcs"			
 		end
 	end
 
