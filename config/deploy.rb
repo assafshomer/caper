@@ -2,19 +2,19 @@
 lock '3.4.0'
 set :application, 'caper'
 set :deploy_user, 'deploy'
+
+# Default value for :scm is :git
+# set :scm, :git
 set :repo_url, 'git@github.com:assafshomer/caper.git'
+# Default branch is :master
+# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 set :rvm_ruby_version, '2.2.0'
 
 set :rails_root, File.expand_path("../../", __FILE__)+'/'
-# Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/#{fetch(:deploy_user)}/apps/#{fetch(:application)}"
-
-# Default value for :scm is :git
-# set :scm, :git
 
 # Default value for :format is :pretty
 # set :format, :pretty
@@ -40,36 +40,12 @@ set :linked_files, %w{.env config/database.yml config/secrets.yml}
 %w[scratch base devops nginx unicorn postgresql redis rvm].each do |recipe|
 	require_relative "./deploy/recipes/#{recipe}"
 end
-# require_relative "./deploy/recipes/scratch"
-# require_relative "./deploy/recipes/base"
-# require_relative "./deploy/recipes/devops"
-# require_relative "./deploy/recipes/postgresql"
-# require_relative "./deploy/recipes/redis"
-# require_relative "./deploy/recipes/unicorn"
-
-# before :deploy, "devops:install"
-# before :deploy, "rvm:install"
-# before :deploy, "nginx:install"
-# before :deploy, "postgresql:install"
-# before :deploy, "redis:install"
-# before :deploy, "postgresql:setup"
 
 # before :deploy, "devops:setup"
 before "deploy:check:linked_files", "devops:copy"
 after :deploy, "nginx:setup"
 after :deploy, "unicorn:setup"
 after :deploy, "unicorn:restart"
-
-
-
-# after "devops:install", "postgresql:install"
-# after "postgresql:install", "postgresql:check_db"
-# after "postgresql:check_db", "postgresql:create_database"
-# after "postgresql:create_database", "redis:install"
-# after "redis:install", "nginx:install" 
-# after "nginx:install", "devops:copy"
-# after "devops:copy", "nginx:setup"
-# after "nginx:setup", "unicorn:setup"
 
 # namespace :deploy do
 

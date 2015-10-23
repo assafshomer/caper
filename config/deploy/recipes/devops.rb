@@ -29,18 +29,15 @@ namespace :devops do
 			invoke "postgresql:install"
 			invoke "redis:install"
 			invoke "postgresql:setup"
+			invoke "devops:reboot"
 		end
 	end
 
-	# task :gems do
-	# 	on roles(:all) do
-	# 		execute "echo 'gem: --no-document' > ~/.gemrc"
-	# 		execute "echo 'gem: --no-ri --no-rdoc' >> ~/.gemrc"
-	# 		execute "cd #{current_path}"
-	# 		execute "bundle install"
-	# 		# execute :sudo, "gem install bundler"
-	# 		# execute :sudo, "gem install rails --version 4.2.0"
-	# 	end
-	# end
+	task :reboot do
+		on roles(:all) do
+			execute :sudo "reboot"
+		end
+	end
+	# TODO: split setup by roles
 
 end
