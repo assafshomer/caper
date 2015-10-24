@@ -40,10 +40,10 @@ namespace :test	do
 		on roles(:all) do		
 			execute :sudo, %Q{-u postgres psql -c "\\list" > ~/checkdb.txt}
 			output = capture("cat ~/checkdb.txt")
-			if output =~ /#{fetch(:postgresql_database)}/
-				set(:db_exists, true)
+			if output =~ /\s*\w+\s*\|\s*#{fetch(:deploy_user)}/
+				puts "yes #{fetch(:deploy_user)}"
 			else
-				set(:db_exists, false)
+				puts "no #{fetch(:deploy_user)}"
 			end
 		end		
 	end
