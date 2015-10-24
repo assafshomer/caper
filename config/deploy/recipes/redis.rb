@@ -1,7 +1,7 @@
 set_if_empty(:redis_port, "6379")
 
 namespace :redis	do
-	desc "Install the latest stable release of PostgreSQL."
+	desc "Install the latest stable release of Redis."
 	task :install do
 		on roles(:db) do			
 			execute :sudo, "wget http://download.redis.io/redis-stable.tar.gz"

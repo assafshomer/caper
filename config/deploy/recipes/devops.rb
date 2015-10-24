@@ -35,7 +35,7 @@ namespace :devops do
 
 	task :reboot do
 		on roles(:all) do
-			execute :sudo "reboot"
+			execute :sudo, "reboot"
 		end
 	end
 	# TODO: split setup by roles
