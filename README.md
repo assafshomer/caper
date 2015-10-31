@@ -45,5 +45,3 @@ Add at the end of the file
 ```Batchfile
 	deployer ALL=(ALL) NOPASSWD:ALL
 ```
-
-
