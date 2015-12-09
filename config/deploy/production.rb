@@ -8,7 +8,6 @@
 # server 'db.example.com', user: 'deploy', roles: %w{db}
 server "5.189.167.87", user: fetch(:deploy_user), roles: %w{web app db}, primary: true
 
-
 # role-based syntax
 # ==================
 
